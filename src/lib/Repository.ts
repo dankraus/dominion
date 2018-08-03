@@ -1,6 +1,6 @@
 import * as EventStore from 'event-store-client';
 import { IAggregate } from './Aggregate/IAggregate';
-import { IEvent } from './Events/IEvent';
+import { IEvent } from './Event/IEvent';
 
 export class Repository {
     private connection: EventStore.Connection;

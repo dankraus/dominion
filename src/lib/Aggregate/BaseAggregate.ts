@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { IAggregate } from './IAggregate';
-import { IEvent } from '../Events/IEvent';
+import { IEvent } from '../Event/IEvent';
 
 export abstract class BaseAggregate implements IAggregate {
     private readonly _id: string = '';

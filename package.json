@@ -10,7 +10,7 @@
   "keywords": [],
   "scripts": {
     "info": "npm-scripts-info",
-    "start": "npm run build && node build/main/index.js",
+    "start": "npm run build && node build/main/example/index.js",
     "build": "run-s clean && run-p build:*",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",

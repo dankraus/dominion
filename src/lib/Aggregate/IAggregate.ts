@@ -1,4 +1,4 @@
-import { IEvent } from "../Events/IEvent";
+import { IEvent } from "../Event/IEvent";
 
 export interface IAggregate {
     id: string;

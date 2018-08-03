@@ -1,4 +1,4 @@
-import { Event } from "./lib/Events/Event";
+import { Event } from "./lib/Event/Event";
 
 export class Debit extends Event {
     public amount: number;
