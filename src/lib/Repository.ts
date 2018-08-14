@@ -69,4 +69,33 @@ export class Repository {
             );
         });
     }
+
+    public async getById<T extends IAggregate>(aggregateType: new (id: string) => T, id: string): Promise<any> {
+        const aggregate = new aggregateType(id);
+
+        console.log('aggregate stream', aggregate);
+        return new Promise((resolve, reject) => {
+            this.connection.readStreamEventsForward(
+                aggregate.streamName,
+                0,
+                500,
+                false,
+                false,
+                (event: EventStore.StoredEvent) => {
+                    // console.log('got event', event);
+                    event
+                },
+                this.credentials,
+                (completed: EventStore.IReadStreamEventsCompleted) => {
+                    console.log('completed', completed);
+                    // handle the different completed 'OperationResult'
+                    if (completed.result === EventStore.ReadStreamResult.Success) {
+                        aggregate.expectedVersion = completed.lastEventNumber;
+                        resolve(aggregate);
+                    } else {
+                        reject(completed);
+                    }
+                })
+        });
+    }
 }

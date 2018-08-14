@@ -1,4 +1,4 @@
-import { Event } from "../Events/Event";
+import { Event } from "../Event/Event";
 
 export class TestEvent extends Event {
     public testVal: number;

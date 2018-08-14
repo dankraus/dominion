@@ -5,29 +5,22 @@ import { Application } from './Application';
 import { Account } from './Account';
 
 const start = () => {
-    const account = new Account();
-
-    console.log('new empty account', account);
-    console.log('saving...');
-    app.repository.save(account)
-        .then(result => {
-            console.log('saved!');
-            console.log(result);
-            account.debit(10.2);
-            app.repository.save(account).then(result => {
-                console.log('saved 2!');
-                console.log(result);
-
-                account.debit(10.2);
-                app.repository.save(account).then(result => {
-                    console.log('saved 3!');
-                    console.log(result);
-                })
-            })
-        })
-        .catch(err => {
-            console.log(err);
+    app.repository.getById<Account>(Account, 'bab6cf20-2450-4562-8e08-7a660cc8455a')
+        .then((account: any) => {
+            console.log('existing account', account);        
         });
+    
+    // const account = new Account();
+    // console.log('new empty account', account);
+    // console.log('saving...');
+    // app.repository.save(account)
+    //     .then(result => {
+    //         console.log('saved!');
+    //         console.log(result);
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
 
 
 }

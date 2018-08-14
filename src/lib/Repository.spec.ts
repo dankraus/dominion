@@ -119,7 +119,7 @@ test.serial('saves serialized events Event Store', async t => {
         sinon.match.any));
 });
 
-test.only('successful save sets expected version', async t => {
+test.serial('successful save sets expected version', async t => {
     testAggregate.test(10);
     testAggregate.test(3.23);
     

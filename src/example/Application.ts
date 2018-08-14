@@ -1,5 +1,5 @@
 import * as EventStore from 'event-store-client';
-import { Repository } from './lib/Repository';
+import { Repository } from '../lib/Repository';
 
 export class Application {
   public repository: Repository;

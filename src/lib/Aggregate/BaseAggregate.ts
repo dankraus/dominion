@@ -5,10 +5,10 @@ import { IEvent } from '../Event/IEvent';
 export abstract class BaseAggregate implements IAggregate {
     private readonly _id: string = '';
     get id(): string { return this._id };
-    
+
     protected _name: string = '';
     get name(): string { return this._name };
-    
+
     protected _expectedVersion: number = -1;
     /**
      * Expected version number of this Aggregate
@@ -18,25 +18,27 @@ export abstract class BaseAggregate implements IAggregate {
      * @returns Returns the expected version number
      */
     get expectedVersion(): number { return this._expectedVersion };
-    
-     /**
-     * Sets the expected version number of this Aggregate. 0 based.
-     *
-     * @returns Returns the expected version number
-     */
-    set expectedVersion(versionNumber: number) { this._expectedVersion = versionNumber };
-    
+
+    /**
+    * Sets the expected version number of this Aggregate. 0 based.
+    *
+    * @returns Returns the expected version number
+    */
+    set expectedVersion(versionNumber: number) { 
+        this._version = this._expectedVersion = versionNumber
+    };
+
     private _version: number;
-    
+
     /**
      * Current version number of the Aggregate. 0 based.
      *
      * @returns Returns the version number
      */
     get version(): number { return this._version };
-    
+
     private _pendingEvents: IEvent[] = [];
-    
+
     /**
      * Unique name of aggreagate used for persistence.
      * Concatenation of aggregate `this._name` and `this._id`
@@ -44,15 +46,18 @@ export abstract class BaseAggregate implements IAggregate {
      * @returns Return stream's name.
      */
     get streamName(): string { return `${this._name}-${this._id}` };
-    
+
     /**
      * Aggregates should extend this class.
      */
-    constructor() {
-        this._id = uuid();
+    constructor()
+    constructor(id: undefined)
+    constructor(id: string)
+    constructor(id?: string) {
+        this._id = !id || id === '' ? uuid() : id;
         this._version = this._expectedVersion;
     }
-    
+
     /**
      * Commands in subclassed Aggregates should call this to record events to be saved
      * @param IEvent event event to be recorded
@@ -61,7 +66,7 @@ export abstract class BaseAggregate implements IAggregate {
         this._pendingEvents.push(event);
         this._version++;
     }
-    
+
     /**
      * Takes pending events to save and resets pending events to empty.
      * @returns IEvent events to save
